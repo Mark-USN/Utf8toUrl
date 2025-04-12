@@ -55,6 +55,17 @@ options:
         # Verify the help message
         self.assertMultiLineEqual(result.stdout, self.help_text)
 
+    def test_default_encoding(self):
+        """Should use "[^a-zA-Z0-9/.:]" as regex."""
+        result = subprocess.run(
+            ["python3", "Utf8toUrl.py", "http://www.just-to-try.com/?doit.php:whynot 192.168.1.1 ' -- !! "],
+            capture_output=True,
+            text=True
+        )
+        # Verify the default encoding
+        self.assertEqual(result.stdout, 
+                         "http://www.just%2dto%2dtry.com/%3fdoit.php:whynot%20192.168.1.1%20%27%20%2d%2d%20%21%21%20\n")
+
     def test_basic_encoding(self):
         """All characters should be encoded if no regex is provided."""
         self.assertEqual(utf8_to_url_encoding("Hello"), "%48%65%6c%6c%6f")

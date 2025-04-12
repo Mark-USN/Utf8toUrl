@@ -28,7 +28,7 @@ def main():
     parser = argparse.ArgumentParser(description="Convert UTF-8 text to URL encoding with optional filtering.")
     
     parser.add_argument("--include-quotes", action="store_true", help="Always encode quotes as %%22 or %%27")
-    parser.add_argument("--include", type=str, help="Regex pattern to determine which characters should be URL-encoded")
+    parser.add_argument("--include", type=str, default="[^a-zA-Z0-9/.:]", help="Regex pattern to determine which characters should be URL-encoded")
     parser.add_argument("text", nargs="?", help="The text to convert (or leave empty to read from stdin)")
 
     args = parser.parse_args()
